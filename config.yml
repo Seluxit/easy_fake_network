@@ -1,0 +1,8 @@
+host: "https://wappsto.com"
+verbose: true
+session_id:
+username:
+password: 
+rate: 0.1
+type_data: "number"
+name_network: "Special network"
