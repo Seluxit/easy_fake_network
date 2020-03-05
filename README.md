@@ -10,8 +10,8 @@ Follow these steps to setup.
 
 The program will create a network with some states. The network name will be the one you specified in the config.yml plus a random string.
 
-After that the program start to run and it will update the data at almost random time.</br>
-Use CTRL+C to stop the program to run.
+After that, the program starts to run and it will update the data at almost random time.</br>
+Use CTRL+C to stop the program.
 
 Use `ruby network.rb create` to only create a network.</br>
 Use `ruby network.rb run` to only run a network.</br>
