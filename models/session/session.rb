@@ -1,6 +1,3 @@
-require "concurrent"
-require "uuid"
-
 module Core_Test
   class Session
     X_SESSION = "X-Session"
@@ -59,7 +56,7 @@ module Core_Test
 
     def create_network(body: nil)
       body ||= Core_Test::Mocker.network
-      response = request(:post, "/services/2.0/network", body: body)
+      response = request(:post, "#{$basic[:endpoint]}network", body: body)
       response&.dig(1, :meta, :id)
     end
   end

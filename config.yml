@@ -1,5 +1,6 @@
 host: "https://wappsto.com"
 verbose: true
+old_endpoint: true
 session_id:
 username:
 password:

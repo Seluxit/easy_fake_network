@@ -6,12 +6,12 @@ operations = ["create", "run"] if operations.empty?
 if operations.include?("create")
   network_id = @session.create_network
   name = $basic[:name_network] + " " + rand(100000).to_s
-  @session.patch("/services/2.0/network/#{network_id}", {name: name})
+  @session.patch("#{$basic[:endpoint]}network/#{network_id}", {name: name})
 end
 
 if operations.include?("run")
   hash = {}
-  values = @session.get("/services/2.0/value?parent_parent_name=#{$basic[:name_network]}&expand=0").result
+  values = @session.get("#{$basic[:endpoint]}value?parent_parent_name=#{$basic[:name_network]}&expand=0").result
   values&.each do |value|
     value[:state]&.each do |state_id|
       if value.has_key?(:number)
@@ -42,11 +42,11 @@ if operations.include?("run")
     when :xml
       "<string>#{FFaker::DizzleIpsum.paragraph}</string>"
     end
-    @session.patch("/services/2.0/state/#{state_id}", {data: data})
+    @session.patch("#{$basic[:endpoint]}state/#{state_id}", {data: data})
     sleep(rand(0..10)*$basic[:rate])
   end
 end
 
 if operations.include?("delete")
-  @session.delete("/services/2.0/network?this_name=#{$basic[:name_network]}")
+  @session.delete("#{$basic[:endpoint]}network?this_name=#{$basic[:name_network]}")
 end
