@@ -2,7 +2,7 @@ module Core_Test
   class Session
     X_SESSION = "X-Session"
 
-    def initialize(username: nil, password: nil, session_id: nil, test: nil,rest: nil)
+    def initialize(username: nil, password: nil, session_id: nil, rest: nil)
       @test = test
       @rest = rest || Core_Test::Rest.new
       @headers = {}

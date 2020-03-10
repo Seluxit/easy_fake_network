@@ -1,6 +1,7 @@
 module Core_Test
   class Mocker
-    def self.network(name: nil, devices: rand(1..4), add_id: false)
+    def self.network(name: nil, add_id: false)
+      devices = $basic[:device][:number] || rand(1..4)
       val = {
         name: name || FFaker::Product.product,
         device: devices.times.map{device(add_id: add_id)}
@@ -11,7 +12,9 @@ module Core_Test
 
     def self.device(name: nil, manufacturer: nil, product: nil,
       serial: nil, description: nil, protocol: nil, communication: nil,
-      values: rand(1..4), statuses: rand(4), add_id: false)
+      statuses: rand(4), add_id: false)
+      values = $basic[:value][:number] || rand(1..4)
+      statuses = $basic[:status][:number] || rand(0..4)
       val = {
         name: name || FFaker::Product.product,
         manufacturer: manufacturer || FFaker::Product.brand,
@@ -30,11 +33,12 @@ module Core_Test
     def self.value(type_state: nil, name: nil, type: nil, period: nil, delta: nil,
       permission: nil, status: "ok", min: nil, max: nil, step: nil, unit: nil,
       si_conversion: nil, encoding: nil, xsd: nil, namespace: nil, add_id: false)
+      group_permission = $basic[:value][:permission] || ["r", "w", "rw"]
       body = {
         name: name || FFaker::Music.album,
         type: type || FFaker::Music.genre,
         status: status,
-        permission: permission || ["r", "w", "rw"].sample,
+        permission: permission || group_permission.sample,
         period: period,
         delta: delta
       }.compact
