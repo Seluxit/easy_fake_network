@@ -28,5 +28,27 @@ module Core_Lib
     def self.symbolize_keys_deep(hash)
       load(dump(hash))
     end
+
+    def self.recursive_merge(hash1, hash2, merge_array: false)
+      hash = {}
+      keys = hash1.keys | hash2.keys
+      keys.each do |key|
+        case [!hash1[key].nil?, !hash2[key].nil?]
+        when [true, false]
+          hash[key] = hash1[key]
+        when [false, true]
+          hash[key] = hash2[key]
+        when [true, true]
+          if hash1[key].is_a?(Hash) && hash2[key].is_a?(Hash)
+            hash[key] = recursive_merge(hash1[key], hash2[key], merge_array: merge_array)
+          elsif hash1[key].is_a?(Array) && hash2[key].is_a?(Array) && merge_array
+            hash[key] = hash1[key] | hash2[key]
+          else
+            hash[key] = hash2[key]
+          end
+        end
+      end
+      hash
+    end
   end
 end

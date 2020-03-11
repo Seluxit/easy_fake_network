@@ -43,7 +43,7 @@ module Core_Test
         delta: delta
       }.compact
       type_state ||= [:number, :string, :blob, :xml].sample
-      type_state = $basic[:type_data]&.to_sym unless $basic[:type_data].nil?
+      type_state = $basic[:value][:type]&.to_sym unless $basic[:value][:type].nil?
       body[type_state] = case type_state
       when :number
         min ||= rand(-100..100)

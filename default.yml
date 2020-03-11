@@ -1,0 +1,28 @@
+host: "https://wappsto.com"
+verbose: true
+old_endpoint: true
+
+authentication:
+  session_id:
+  username:
+  password:
+
+network:
+  name: "Special network"
+  use_structure: false
+  number: 1
+device:
+  number:
+status:
+  number: 0
+value:
+  number:
+  type: "number"
+  permission: ["r", "w", "rw"]
+state:
+  rate: 0.1
+
+iot:
+  active: false
+  host: wappsto.com
+  port: 42005

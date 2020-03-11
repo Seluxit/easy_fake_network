@@ -1,18 +1,17 @@
 module Core_Test
   class Rest
-    def initialize(host: $basic[:host], verbose: $basic[:verbose])
+    def initialize(host: $basic[:host])
       @host    = host
       @options = {
         headers: {"Content-Type" => "application/json", "Accept" => "application/json"},
         timeout: 60,
         format: :plain
       }
-      @verbose = verbose
     end
 
     attr_accessor :verbose, :code, :result
 
-    def request(method, path, body: nil, headers: {}, verbose: @verbose, options: {})
+    def request(method, path, body: nil, headers: {}, options: {})
       # Parse request
 
       options.merge!(Core_Lib::DeepClone.clone(@options)).compact!
@@ -45,15 +44,15 @@ module Core_Test
       @result = {class_error: e.class, message: e.message}
     ensure
       # Print response
-      print_on_screen(method, path, body, verbose)
+      print_on_screen(method, path, body)
 
       # Send on nats
       # send_on_queue(method, path, options, code, result)
       return Output.new(@code, @result, headers: response&.headers)
     end
 
-    def print_on_screen(method, path, body, verbose)
-      return unless verbose
+    def print_on_screen(method, path, body)
+      return unless $basic[:verbose]
 
       id = rand(1000)
 

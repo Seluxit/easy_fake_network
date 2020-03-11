@@ -8,6 +8,7 @@ module Core_Test
       @headers = {}
       @username = username
       @password = password
+      puts "Creating authorization"
       if !session_id.nil?
         @headers[X_SESSION] = session_id
         unless verify
@@ -24,6 +25,7 @@ module Core_Test
         puts "No username or password defined"
         abort
       end
+      puts "Authorization successful".green
     end
 
     attr_reader :username, :password, :installation_id

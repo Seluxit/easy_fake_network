@@ -2,6 +2,8 @@ require 'socket'
 require 'eventmachine'
 require 'fileutils'
 
+require "pry-byebug"
+
 module Core_Test
   class Iot
     ADDR_KEYS = "#{__dir__}/temp_keys"
@@ -9,13 +11,11 @@ module Core_Test
     ADDR_CERTIFICATE = "#{__dir__}/temp_keys/certificate"
 
     class ClientHandler < EM::Connection
-      def initialize(id:, verbose: $basic[:verbose],
-        host: $basic[:iot_host], port: $basic[:iot_host])
+      def initialize(id:)
         @id = id
-        @data = nil
-        @verbose = verbose
-        @host = host
-        @port = port
+        @data = ""
+        @host = $basic[:iot][:host]
+        @port = $basic[:iot][:port]
         super
       end
 
@@ -41,39 +41,38 @@ module Core_Test
       end
 
       def ssl_handshake_completed
-        puts "Connection establised for network #{@id}" if @verbose
+        puts "Connection establised for network #{@id}".green
       end
     end
 
-    def initialize(verbose: $basic[:verbose],
-      host: $basic[:iot_host], port: $basic[:iot_host], id: nil)
-      @host = host
-      @port = port
-      @verbose = verbose
+    def initialize(id: nil)
       @id = id
+      @running = false
     end
 
     attr_reader :id
 
     def create(session)
-      creator = session.post("/services/2.1/creator", {}, verbose: @verbose)
+      creator = session.post("/services/2.1/creator", {})
       @id = creator[:network][:id]
       FileUtils.mkdir_p(ADDR_PRIVATE_KEY)
       FileUtils.mkdir_p(ADDR_CERTIFICATE)
-      File.write("#{ADDR_PRIVATE_KEY}/#{@id}.crt", creator[:certificate])
-      File.write("#{ADDR_CERTIFICATE}/#{@id}.key", creator[:private_key])
+      File.write("#{ADDR_PRIVATE_KEY}/#{@id}.key", creator[:private_key])
+      File.write("#{ADDR_CERTIFICATE}/#{@id}.crt", creator[:certificate])
       self
     end
 
     def run
+      return if @running
       @client = nil
       @data = {}
       Thread.new do
         EM.run do
-          @client = EventMachine.connect(@host, @port, ClientHandler,
-            id: @id, verbose: @verbose)
+          @client = EventMachine.connect($basic[:iot][:host], $basic[:iot][:port], ClientHandler,
+            id: @id)
         end
       end
+      @running = true
       sleep(0.5)
     end
 
@@ -82,17 +81,17 @@ module Core_Test
         @client.close_connection rescue nil
         sleep(0.1)
       end
-      @client.reconnect(@host, @port)
+      @client.reconnect($basic[:iot][:host], $basic[:iot][:port])
       sleep(0.5)
     end
 
-    attr_reader :id, :creator_id, :bulk
+    attr_reader :id, :creator_id, :bulk, :running
     attr_accessor :test, :client
 
     def request(*args)
       send_data(*args)
       data = receive_data
-      return data if data.is_a?(String)
+      return data if data.is_a?(String) || data.nil?
 
       if data.key?(:result)
         code = args[0] == :post ? 201 : 200
@@ -145,8 +144,8 @@ module Core_Test
         params: {
           url: url,
           data: body,
-          identifier: options.dig(:identifier),
-          trace: options.dig(:trace)
+          identifier: options&.dig(:identifier),
+          trace: options&.dig(:trace)
         }.compact
       }
       print_on_screen(hash, :request)
@@ -192,7 +191,7 @@ module Core_Test
     end
 
     def print_on_screen(hash, type)
-      return unless @verbose
+      return unless $basic[:verbose]
       print "\n === RPC #{type.to_s.upcase} #{@id} ===\n".yellow
       ap hash, indent: -2
       print " === END #{type.to_s.upcase} #{@id} ===\n".yellow
@@ -200,6 +199,8 @@ module Core_Test
 
     def stop(delete_certificate: true)
       @client.close_connection rescue nil
+      @running = false
+      puts "Connection closed for network #{@id}".red
       sleep(0.1)
     end
 

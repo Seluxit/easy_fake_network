@@ -1,28 +1,11 @@
-host: "https://wappsto.com"
-verbose: true
-old_endpoint: true
-
+host: "https://dev.wappsto.com"
 authentication:
-  session_id:
-  username:
-  password:
-
-network:
-  name: "Special network"
-  use_structure: false
-  number: 1
-device:
-  number:
-status:
-  number: 0
-value:
-  number:
-  type: "number"
-  permission: ["r", "w", "rw"]
+  username: "stefano@seluxit.com"
+  password: "ciao"
+iot:
+  active: true
+  host: dev.wappsto.com
+  port: 42006
+verbose: false
 state:
   rate: 0.1
-
-iot:
-  active: false
-  host: wappsto.com
-  port: 42005

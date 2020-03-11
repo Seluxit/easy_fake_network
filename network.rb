@@ -4,8 +4,8 @@ module Script
   class Network
     def initialize(operations)
       @operations = operations
-      @operations = ["create", "run"] if @operations.empty?
-      @session = Core_Test::Session.new(**$basic[:authentication][:username])
+      @operations = ["run", "listen"] if @operations.empty?
+      @session = Core_Test::Session.new(**$basic[:authentication])
       @iots = {}
     end
 
@@ -13,6 +13,10 @@ module Script
       create
       run
       delete
+      listen
+      loop{} if @operations.include?("listen") || @operations.include?("run")
     end
   end
 end
+
+Script::Network.new(ARGV).start
