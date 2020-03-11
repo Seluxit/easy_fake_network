@@ -21,6 +21,7 @@ module Script
       elsif value.has_key?(:xml)
         @values[value_id] = {type: :xml, info: value[:xml]}
       end
+      @values[value_id][:name] = value[:name]
 
       state_control_id = value[:state].find{|s| s[:type] == "Control"}&.dig(:meta, :id)
       unless state_control_id.nil?

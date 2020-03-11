@@ -7,6 +7,7 @@ module Script
       @operations = ["run", "listen"] if @operations.empty?
       @session = Core_Test::Session.new(**$basic[:authentication])
       @iots = {}
+      @thread = Thread.pool(10, 20)
     end
 
     def start

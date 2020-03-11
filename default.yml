@@ -26,3 +26,4 @@ iot:
   active: false
   host: wappsto.com
   port: 42005
+  close_connection: false

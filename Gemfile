@@ -7,5 +7,5 @@ gem "colored",       "1.2"
 gem "ffaker",        "2.11.0"
 gem "require_all",     "2.0.0"
 gem "eventmachine",   "1.2.7"
-
+gem "thread",          "0.2.2"
 gem "pry-byebug"
