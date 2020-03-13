@@ -5,7 +5,11 @@ module Script
       puts "Start creation".blue
 
       if $basic[:network][:use_structure]
-        structure = File.read("#{__dir__}/../structure.json") rescue Core_Test::Mocker.network
+        begin
+          structure = Core_Lib::Obj.load(File.read("#{__dir__}/../structure.json"))
+        rescue
+          structure = Core_Test::Mocker.network
+        end
       end
 
       puts "Creation of #{$basic[:network][:number]} networks"

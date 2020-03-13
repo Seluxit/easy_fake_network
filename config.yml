@@ -7,5 +7,7 @@ iot:
   host: dev.wappsto.com
   port: 42006
 verbose: false
+network:
+  use_structure: true
 state:
   rate: 0.1

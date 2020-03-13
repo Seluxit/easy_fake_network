@@ -64,6 +64,7 @@ module Core_Test
 
     def run
       return if @running
+      @running = true
       @client = nil
       @data = {}
       Thread.new do
@@ -72,7 +73,6 @@ module Core_Test
             id: @id)
         end
       end
-      @running = true
       sleep(0.5)
     end
 

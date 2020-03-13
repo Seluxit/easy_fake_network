@@ -1,0 +1,61 @@
+{
+    "device": [
+        {
+            "name": "Pince Input Filter",
+            "manufacturer": "Brioffefunc",
+            "product": "W71",
+            "serial": "1305675780-6",
+            "description": "But round cheeses are to be cut in wedges, like a cake cheese paring with wine team cheesy says hi in an artisan farmerhouse and wrap blue cheeses all over as mould spores spread readily team cheesy says hi the early bird may get the worm, but the second mouse gets the cheese in the trap until the wheels form a white coat of penicillium moulds separate the curds from the wey cut to size.",
+            "protocol": "EG Input Dummy Groove_protocol",
+            "communication": "always",
+            "value": [
+                {
+                    "name": "front",
+                    "type": "Electronic",
+                    "permission": "rw",
+                    "status": "ok",
+                    "number": {
+                        "min": 58.0,
+                        "max": 118.0,
+                        "step": 1.0,
+                        "unit": "C"
+                    },
+                    "state": [
+                        {
+                            "timestamp": "2020-03-11T09:06:16.880930Z",
+                            "data": "92",
+                            "type": "Report"
+                        },{
+                            "timestamp": "2020-03-11T09:06:16.880930Z",
+                            "data": "92",
+                            "type": "Control"
+                        }
+                    ]
+                },
+                {
+                    "name": "back",
+                    "type": "Electronic",
+                    "permission": "rw",
+                    "status": "ok",
+                    "number": {
+                        "min": 58.0,
+                        "max": 118.0,
+                        "step": 1.0,
+                        "unit": "C"
+                    },
+                    "state": [
+                        {
+                            "timestamp": "2020-03-11T09:06:16.880930Z",
+                            "data": "92",
+                            "type": "Report"
+                        },{
+                            "timestamp": "2020-03-11T09:06:16.880930Z",
+                            "data": "92",
+                            "type": "Control"
+                        }
+                    ]
+                }
+            ]
+        }
+      ]
+}

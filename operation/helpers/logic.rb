@@ -3,7 +3,7 @@ module Script
     def retrieve_logic(value_id)
       @values ||= {}
       @states ||= {}
-      return if @values.key?(value_id)
+      return @values[value_id] if @values.key?(value_id)
 
       value = @session.get("#{$basic[:endpoint]}value/#{value_id}?expand=1&verbose=true")
       if value.code != 200 || value.result[:permission] == "none"

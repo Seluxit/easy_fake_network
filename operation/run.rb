@@ -38,7 +38,7 @@ module Script
           {data: data})
       end
       if response.code != 200
-        puts "Message not sent successfully: #{response.result[:message]}".red
+        puts "Message not sent successfully: #{response.result[:message] rescue response.result}".red
       else
         puts "Message send successfully".green
       end
