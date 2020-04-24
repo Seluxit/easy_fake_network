@@ -56,12 +56,12 @@ iot:
   close_connection: false
 ```
 
-`host`: host of the website
-`verbose`: true if you want to have more information
-`old_endpoint`: true if you want to use old backend (without 2.0)
-`authentication`: specify either a valid session_id or your credentials
-`network`: specify the name of the network, if you want to structured network (from `structure.json`, and how many network you want to create)
-`device`: specify how many devices you want to create
-`value`: specify the permission, how many values you wish and the type (if not specified it will be random)
-`state`: specify in rate how often the control states should be updated
-`iot`: specify if you want to use an active endpoint with host and port. You can specify if you want to close the connection
+`host`: host of the website  
+`verbose`: true if you want to have more information  
+`old_endpoint`: true if you want to use old backend (without 2.0)  
+`authentication`: specify either a valid session_id or your credentials  
+`network`: specify the name of the network, if you want to structured network (from `structure.json`, and how many network you want to create)  
+`device`: specify how many devices you want to create  
+`value`: specify the permission, how many values you wish and the type (if not specified it will be random)  
+`state`: specify in rate how often the control states should be updated  
+`iot`: specify if you want to use an active endpoint with host and port. You can specify if you want to close the connection  
