@@ -13,9 +13,9 @@ The program will create a network with some states. The network name will be the
 After that, the program starts to run and it will update the data at almost random time.</br>
 Use CTRL+C to stop the program.
 
-Use `bundle exec ruby network.rb create` to only create a network.
-Use `bundle exec ruby network.rb run` to only run a network.
-Use `bundle exec ruby network.rb delete` to delete all the network created with this string.
+Use `bundle exec ruby network.rb create` to only create a network.  
+Use `bundle exec ruby network.rb run` to only run a network.  
+Use `bundle exec ruby network.rb delete` to delete all the network created with this string.  
 Use `bundle exec ruby network.rb listen` to listen for coming events.
 
 
