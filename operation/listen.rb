@@ -14,7 +14,7 @@ module Script
         v[:iot].run
         Thread.new do
           EM::PeriodicTimer.new(1) do
-            data = v[:iot].receive_data
+            data = v[:iot].receive_data(repeat: 1)
             if data != "" &&  data[:method] == "PUT"
               v[:iot].send_result(data[:id], {success: true})
               control_id = data[:params][:url].split("/")[-1]

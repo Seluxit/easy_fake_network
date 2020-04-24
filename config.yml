@@ -1,11 +1,11 @@
-host: "https://dev.wappsto.com"
+host: "https://qa.wappsto.com"
 authentication:
   username: "stefano@seluxit.com"
   password: "ciao"
 iot:
   active: true
-  host: dev.wappsto.com
-  port: 42006
+  host: qa.wappsto.com
+  port: 31006
 verbose: false
 network:
   use_structure: true

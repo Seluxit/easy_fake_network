@@ -178,13 +178,13 @@ module Core_Test
       @client.send_data(Core_Lib::Obj.dump(hash))
     end
 
-    def receive_data
+    def receive_data(repeat: 10)
       data = nil
-      10.times do |t|
+      repeat.times do |t|
         data = @client.data
         data = Core_Lib::Obj.load(data) rescue data
         break if data != ""
-        sleep(0.5)
+        sleep(0.5) if repeat > 1
       end
       print_on_screen(data, :response)
       data
