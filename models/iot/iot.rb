@@ -178,7 +178,7 @@ module Core_Test
       @client.send_data(Core_Lib::Obj.dump(hash))
     end
 
-    def receive_data(repeat: 10)
+    def receive_data(repeat: 100)
       data = nil
       repeat.times do |t|
         data = @client.data

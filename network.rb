@@ -11,11 +11,12 @@ module Script
     end
 
     def start
+      continue_post
       create
       run
       delete
       listen
-      loop{} if @operations.include?("listen") || @operations.include?("run")
+      loop{} if !(["listen", "run", "continue_post"] & @operations).empty?
     end
   end
 end

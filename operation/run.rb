@@ -4,7 +4,11 @@ module Script
       return unless @operations.include?("run")
       puts "Start running".blue
 
-      @values_id = @session.get("#{$basic[:endpoint]}value?parent_parent_name=#{$basic[:network][:name]}").result[:id]
+      if $basic[:network][:id].nil?
+        @values_id = @session.get("#{$basic[:endpoint]}value?parent_parent_name=#{$basic[:network][:name]}").result[:id]
+      else
+        @values_id = @session.get("#{$basic[:endpoint]}value?parent_parent_meta.id=#{$basic[:network][:id]}").result[:id]
+      end
 
       Thread.new do
         loop do
@@ -13,8 +17,8 @@ module Script
           if @values[value_id][:is_iot]
             @values[value_id][:iot].run
           end
-          control(value_id)
-          report(value_id)
+          control(value_id) unless $basic[:skip_control]
+          report(value_id)  unless $basic[:skip_report]
           if @values[value_id][:is_iot] && !@operations.include?("listen") &&
             $basic[:network][:close_connection]
             @values[value_id][:iot].stop
@@ -26,7 +30,6 @@ module Script
 
     def report(value_id)
       return if @values[value_id][:report].nil?
-
 
       data = return_data(value_id)
       puts "Sending #{@values[value_id][:name]} report state #{@values[value_id][:report]} of value. Data: #{data}"

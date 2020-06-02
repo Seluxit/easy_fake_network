@@ -17,7 +17,7 @@ Use `bundle exec ruby network.rb create` to only create a network.
 Use `bundle exec ruby network.rb run` to only run a network.  
 Use `bundle exec ruby network.rb delete` to delete all the network created with this string.  
 Use `bundle exec ruby network.rb listen` to listen for coming events.
-
+Use `bundle exec ruby network.rb contine_post` to continue to post the network (you must specify the network_id).
 
 Configuration file
 ----------------------
